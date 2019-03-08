@@ -58,7 +58,14 @@ class Client
      * @var string
      */
     protected $submitURL;
-
+    
+    /**
+     * Provide real smsgate URL, if $httpClient not provided, the lib will use
+     * Guzzle6 as default HttpClient PSR-18 implementation
+     * 
+     * @param string $submitURL
+     * @param HttpClient $httpClient
+     */
     public function __construct($submitURL, HttpClient $httpClient = null)
     {
         if (is_null($httpClient)) {
@@ -76,7 +83,13 @@ class Client
     {
         return $this->httpClient;
     }
-
+    
+    /**
+     * Set HttpClient PSR-18
+     * 
+     * @param HttpClient $httpClient
+     * @return $this
+     */
     public function setHTTPClient(HttpClient $httpClient)
     {
         $this->httpClient = $httpClient;
@@ -132,6 +145,7 @@ class Client
 
     /**
      * Parse delivery report object from the request
+     * If $request is null, it will be obtained from the globals
      * 
      * @param ServerRequestInterface $request
      * @return DeliveryReport|null

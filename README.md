@@ -20,9 +20,9 @@ If you're new to Composer, here are some resources that you may find useful:
 
 ```php
 //use composer's autoload
-require '../vendor/autoload.php';
+require 'vendor/autoload.php';
 
-
+//make sure to set the real URL for bulk gate
 $gate = new SMSGate\Client('http://localhost:9000/bulk_server');
 
 $sms = new SMSGate\SMSRequest;
@@ -32,6 +32,7 @@ $sms    ->setType(SMSGate\Client::TYPE_TEXT)
         ->setSender('Test Sender')
         ->setReceiver('41587000201')
         ->setText('Hello there!')
+        ////make sure to set the real URL for your webhook handler
         ->setDlrUrl('http://localhost:8000/dlr.php')
         ->setDlrMask(SMSGate\Client::DLR_MASK_STANDARD);
 try {
@@ -48,8 +49,7 @@ echo "SMS sent with ID: " . $response->msgId . " and num of parts: " . $response
 
 ```php
 //use composer's autoload
-require '../vendor/autoload.php';
-
+require 'vendor/autoload.php';
 
 $gate = new SMSGate\Client('');
 
@@ -64,8 +64,10 @@ error_log("Received DLR: " . json_encode($dlr));
 
 Check `examples` directory for more details.
 To run examples locally run from the command line
-```
+
+```bash
 cd examples
 ./run_srv.sh
 ```
+
 and then open `http://localhost:8000/`
